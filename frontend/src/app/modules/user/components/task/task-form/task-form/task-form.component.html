@@ -1,0 +1,38 @@
+<div class="modal show d-block" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form (ngSubmit)="save()" #taskForm="ngForm">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ task ? 'Edit Task' : 'New Task' }}</h5>
+            <button type="button" class="btn-close" (click)="close.emit(false)"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label>Title</label>
+              <input [(ngModel)]="formData.title" name="title" class="form-control outline" required maxlength="100"  #title="ngModel"/>
+              <small class="form-text text-muted">Max length: 100 characters</small>
+              <div *ngIf="title.invalid && (title.dirty || title.touched)" class="text-danger">
+                Title is required.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label>Description</label>
+              <textarea [(ngModel)]="formData.description" name="description" class="form-control outline" required maxlength="500"></textarea>
+              <small class="form-text text-muted">Max length: 500 characters</small>
+            </div>
+            <div class="mb-3">
+              <label>Status</label>
+              <select [(ngModel)]="formData.status" name="status" class="form-select outline" style="font-size: 14px;">
+                <option *ngFor="let s of statusList" [value]="s" style="font-size: 14px;">{{ s }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn border-secondary" (click)="close.emit(false)">Cancel</button>
+            <button type="submit" class="btn btn-dark" [disabled]="taskForm.invalid">{{ task ? 'Update' : 'Create' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
